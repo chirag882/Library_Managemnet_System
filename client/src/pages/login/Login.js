@@ -13,10 +13,10 @@ function Login() {
         localStorage.setItem("token", response.data.data);
         navigate("/");
       } else {
-        console.log("Something went wrong");
+        alert("Something went wrong");
       }
     } catch (error) {
-      console.log(error);
+      alert(error.message);
     }
   };
 

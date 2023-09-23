@@ -15,7 +15,8 @@ export default function Cart() {
 
   const handleCheckOut = async() => {
     for (let i = 0; i < data.length; i++) {
-      await axios.put(`http://localhost:5000/books/decrease?id=${data[i].id}`)
+      let id = data[i]._id;
+      await axios.put(`http://localhost:5000/books/decrease?id=${id}`)
     }
     dispatch({ type: "DROP" })
   }

@@ -32,13 +32,14 @@ exports.getBooksByGenre = async (req, res) => {
 exports.decreaseBook = async (req, res) => {
   try {
     const id = req.query.id;
-    await Book.findByIdAndUpdate({id:id},{
+    await Book.findByIdAndUpdate({_id:id},{
       $inc: {
         stock: -1
       }
-    }, {
-      upsert: false
     });
+    res
+      .status(200)
+      .send({ message: "Decreased", success: true});
   } catch (error) {
     console.log(error);
     res
