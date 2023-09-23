@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { setUser } from "../redux/userSlice";
 
 function ProtectedRoute(props) {
-  const { user, reloadUser } = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const getUser = async () => {
     try {
@@ -19,7 +20,7 @@ function ProtectedRoute(props) {
         }
       );
       if (response.data.success) {
-        setUser(response.data.data);
+         dispatch(setUser(response.data.data));
       } else {
         localStorage.clear();
         navigate("/login");

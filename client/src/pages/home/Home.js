@@ -3,6 +3,7 @@ import ContentWrapper from "../../components/contentWrapper/ContentWrapper";
 import BookCard from "../../components/bookCard/BookCard";
 import axios from "axios";
 import Spinner from "../../components/spinner/Spinner"
+
 import "./style.scss";
 const Home = () => {
   const [data, setData] = useState([]);

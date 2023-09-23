@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
+import Explore from "./pages/explore/Explore"
 import PublicRoute from "./components/PublicRoute";
 import ProtectedRoute from "./components/ProtectedRoute.js";
 import "./App.css";
@@ -20,6 +21,14 @@ function App() {
               <ProtectedRoute>
                 <Header />
                 <Home />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/explore"
+            element={
+              <ProtectedRoute>
+                <Explore />
               </ProtectedRoute>
             }
           />

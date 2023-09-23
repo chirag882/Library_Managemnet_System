@@ -2,16 +2,19 @@ import React, { useState, useEffect } from "react";
 import ContentWrapper from "../contentWrapper/ContentWrapper";
 import { VscChromeClose } from "react-icons/vsc";
 import { useNavigate, useLocation } from "react-router-dom";
-import {ShoppingCartOutlined} from '@ant-design/icons';
+import { ShoppingCartOutlined } from "@ant-design/icons";
 import { useCart, useDispatchCart } from "../../components/ContextReducer";
 import logo from "../../assets/logo.png";
-import { Badge } from 'antd';
+import { Badge } from "antd";
+import { useSelector } from "react-redux";
 import "./style.scss";
 import Modal from "../../Modal";
 import Cart from "../../pages/cart/Cart";
+import Dropdown from "../dropdown/DropdownButton";
 const Header = () => {
   const data = useCart();
-  const [cartView,setCartView] = useState(false);
+  const user = useSelector((state) => state.user);
+  const [cartView, setCartView] = useState(false);
   const [show, setShow] = useState("top");
   const [lastScrollY, setLastScrollY] = useState(0);
   const [query, setQuery] = useState("");
@@ -53,8 +56,7 @@ const Header = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/login");
-  }
-  
+  };
 
   return (
     <header className={`header ${show}`}>
@@ -63,14 +65,34 @@ const Header = () => {
           <img src={logo} alt="" />
         </div>
         <ul className="menuItems">
+        <li className="menuItem">
+            Hey, {user?.user?.name}
+          </li>
+          <li className="menuItem">
+            <Dropdown />
+          </li>
           <li className="menuItem" onClick={handleLogout}>
             Log Out
           </li>
-          <li className="menuItem" onClick={() => {setCartView(true)}}>
-            <ShoppingCartOutlined style={{ fontSize: '150%'}} />
-            <Badge size="small" count={data.length} style={{ fontSize: '85%'}} offset={[-21, -20]} />
+          <li
+            className="menuItem"
+            onClick={() => {
+              setCartView(true);
+            }}
+          >
+            <ShoppingCartOutlined style={{ fontSize: "150%" }} />
+            <Badge
+              size="small"
+              count={data.length}
+              style={{ fontSize: "85%" }}
+              offset={[-21, -20]}
+            />
           </li>
-          {cartView ? <Modal onClose={() => setCartView(false)}><Cart/></Modal> : null}
+          {cartView ? (
+            <Modal onClose={() => setCartView(false)}>
+              <Cart />
+            </Modal>
+          ) : null}
         </ul>
       </ContentWrapper>
       {showSearch && (

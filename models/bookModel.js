@@ -28,6 +28,9 @@ const bookSchema = new mongoose.Schema({
     stock: {
         type: Number,
     },
+    genre: {
+        type: String,
+    },
 });
 
 const bookModel = mongoose.model('books', bookSchema)

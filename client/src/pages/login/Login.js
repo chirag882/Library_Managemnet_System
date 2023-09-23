@@ -9,7 +9,6 @@ function Login() {
   const onFinish = async (values) => {
     try {
       const response = await axios.post("http://localhost:5000/login", values);
-      console.log(response.data.data);
       if (response.data.success) {
         localStorage.setItem("token", response.data.data);
         navigate("/");
