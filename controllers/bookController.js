@@ -18,8 +18,7 @@ exports.getAllBooks = async (req, res) => {
 exports.getBooksByGenre = async (req, res) => {
   try {
     const gen = req.query.genre;
-    console.log(gen);
-    const books = await Book.find({ genre: gen });
+    const books = await Book.find({genre:gen})
     res.send(books);
   } catch (error) {
     console.log(error);

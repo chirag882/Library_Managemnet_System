@@ -25,10 +25,42 @@ function App() {
             }
           />
           <Route
-            path="/explore"
+            path="/explore/fiction"
             element={
               <ProtectedRoute>
-                <Explore />
+                <Explore type={"Fiction"}/>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/explore/romance"
+            element={
+              <ProtectedRoute>
+                <Explore type={"Romance"}/>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/explore/comic"
+            element={
+              <ProtectedRoute>
+                <Explore type={"Comics"}/>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/explore/crime"
+            element={
+              <ProtectedRoute>
+                <Explore type={"Crime"}/>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/explore/textbook"
+            element={
+              <ProtectedRoute>
+                <Explore type={"Textbook"}/>
               </ProtectedRoute>
             }
           />

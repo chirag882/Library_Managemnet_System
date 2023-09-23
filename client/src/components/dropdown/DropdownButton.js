@@ -5,23 +5,23 @@ import { Link } from "react-router-dom";
 const items = [
   {
     key: "1",
-    label: <Link to="/explore">Fiction</Link>,
+    label: <Link to="/explore/fiction">Fiction</Link>,
   },
   {
     key: "2",
-    label: <Link to="/explore">Romance</Link>,
+    label: <Link to="/explore/romance">Romance</Link>,
   },
   {
     key: "3",
-    label: <Link to="/explore">Comic</Link>,
+    label: <Link to="/explore/comic">Comic</Link>,
   },
   {
     key: "4",
-    label: <Link to="/explore">Textbook</Link>,
+    label: <Link to="/explore/textbook">Textbook</Link>,
   },
   {
     key: "5",
-    label: <Link to="/explore">Crime</Link>,
+    label: <Link to="/explore/crime">Crime</Link>,
   },
 ];
 const DropdownButton = () => (
