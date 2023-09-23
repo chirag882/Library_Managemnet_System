@@ -1,6 +1,7 @@
 import React from 'react'
 import {DeleteFilled} from '@ant-design/icons';
 import { useCart, useDispatchCart } from "../../components/ContextReducer";
+import axios from "axios";
 export default function Cart() {
   let data = useCart();
   let dispatch = useDispatchCart();
@@ -11,14 +12,14 @@ export default function Cart() {
       </div>
     )
   }
-  // const handleRemove = (index)=>{
-  //   console.log(index)
-  //   dispatch({type:"REMOVE",index:index})
-  // }
 
-  const handleCheckOut = async () => {
-    
+  const handleCheckOut = async() => {
+    for (let i = 0; i < data.length; i++) {
+      await axios.put(`http://localhost:5000/books/decrease?id=${data[i].id}`)
+    }
+    dispatch({ type: "DROP" })
   }
+
   return (
     <div>
 

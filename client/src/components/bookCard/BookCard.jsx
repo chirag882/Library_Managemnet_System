@@ -8,6 +8,7 @@ const BookCard = ({data}) => {
   const name = data.title.slice(0, 25);
   const author = data.author;
   const id = data._id;
+  const stock = data.stock;
   const handleCart = async () => {
     let book = [];
     console.log(state);
@@ -17,7 +18,7 @@ const BookCard = ({data}) => {
         break;
       }
     }
-    if(book.length === 0){
+    if(book.length === 0 && stock > 0){
       await dispatch({type:"ADD",id: id, name: name,author: author})
     } 
   }

@@ -55,20 +55,8 @@
     }
   }
 }
-.coverContent {
-  width: 100%;
-  background-color: var(--black);
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  .maincontent {
-    margin-top: 50px;
-    justify-content: center;
-    width: 100%;
-    max-width: 1300px;
-    margin: 0 auto;
-    padding: 0 20px;
-    display: flex;
-    flex-wrap: wrap;
+.coverContent{
+  .maincontent{
+    margin-top: 100px;
   }
 }

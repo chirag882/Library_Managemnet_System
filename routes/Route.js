@@ -12,6 +12,6 @@ router.post("/get-user-info-by-id", authMiddleware, userCntroller.info)
 // get books
 router.get("/books",bookCntroller.getAllBooks);
 router.get("/expore",bookCntroller.getBooksByGenre);
-
+router.put("/books/decrease",bookCntroller.decreaseBook);
 
 module.exports = router;

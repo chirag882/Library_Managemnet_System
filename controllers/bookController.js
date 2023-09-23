@@ -27,3 +27,22 @@ exports.getBooksByGenre = async (req, res) => {
       .send({ message: "Cannot get books", success: false, error });
   }
 };
+
+// decreaseBook
+exports.decreaseBook = async (req, res) => {
+  try {
+    const id = req.query.id;
+    await Book.findByIdAndUpdate({id:id},{
+      $inc: {
+        stock: -1
+      }
+    }, {
+      upsert: false
+    });
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .send({ message: "Cannot get books", success: false, error });
+  }
+};
