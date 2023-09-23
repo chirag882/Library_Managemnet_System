@@ -28,7 +28,7 @@ const Explore = ({ type }) => {
 
   useEffect(() => {
     getCardData();
-  }, []);
+  }, [type]);
 
   const state = useCart();
   const user = useSelector((state) => state.user);

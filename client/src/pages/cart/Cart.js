@@ -3,9 +3,9 @@ import {DeleteFilled} from '@ant-design/icons';
 import { useCart, useDispatchCart } from "../../components/ContextReducer";
 import axios from "axios";
 export default function Cart() {
-  let data = useCart();
+  let state = useCart();
   let dispatch = useDispatchCart();
-  if (data.length === 0) {
+  if (state.length === 0) {
     return (
       <div>
         <div className='m-5 w-100 text-center fs-3 text-white'>The Cart is Empty!</div>
@@ -14,17 +14,24 @@ export default function Cart() {
   }
 
   const handleCheckOut = async() => {
-    for (let i = 0; i < data.length; i++) {
-      let id = data[i]._id;
-      await axios.put(`http://localhost:5000/books/decrease?id=${id}`)
-    }
-    dispatch({ type: "DROP" })
+    await axios.post("http://localhost:5000/books/decrease",{
+      data : (state)
+    })
+    .then((response) => {
+      if(response.status === 200){
+        dispatch({type:"DROP"});
+        window.location.reload();
+      }else{
+        console.log("Error in checkout");
+      }
+    })
+    .catch((err) => {
+      console.log(err.message)
+    })
   }
 
   return (
     <div>
-
-      {console.log(data)}
       <div className='container m-auto mt-5 table-responsive  table-responsive-sm table-responsive-md' >
         <table className='table table-hover '>
           <thead className=' text-success fs-4'>
@@ -36,7 +43,7 @@ export default function Cart() {
             </tr>
           </thead>
           <tbody>
-            {data.map((book, index) => (
+            {state.map((book, index) => (
               <tr>
                 <th scope='row' >{index + 1}</th>
                 <td >{book.name}</td>

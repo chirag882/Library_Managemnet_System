@@ -18,7 +18,7 @@ exports.getAllBooks = async (req, res) => {
 exports.getBooksByGenre = async (req, res) => {
   try {
     const gen = req.query.genre;
-    const books = await Book.find({genre:gen})
+    const books = await Book.find({ genre: gen });
     res.send(books);
   } catch (error) {
     console.log(error);
@@ -30,20 +30,37 @@ exports.getBooksByGenre = async (req, res) => {
 
 // decreaseBook
 exports.decreaseBook = async (req, res) => {
-  try {
-    const id = req.query.id;
-    await Book.findByIdAndUpdate({_id:id},{
-      $inc: {
-        stock: -1
-      }
+  let cart = req.body.data;
+  // console.log(cart);
+  if (cart.length === 0) {
+    return res.status(400).send({
+      msg: "Empty cart",
     });
-    res
-      .status(200)
-      .send({ message: "Decreased", success: true});
-  } catch (error) {
-    console.log(error);
-    res
-      .status(500)
-      .send({ message: "Cannot get books", success: false, error });
   }
+
+  let updates = cart.map(async (item) => {
+    return await Book.findOneAndUpdate(
+      {
+        title: item.name,
+      },
+      {
+        $inc: {
+          stock: -1,
+        },
+      }
+    );
+  });
+
+  Promise.all(updates)
+    .then(() => {
+      return res.status(200).send({
+        msg: "inventory updated",
+      });
+    })
+    .catch((err) => {
+      console.log("err", err.stack);
+      return res.status(500).send({
+        msg: "inventory update failed!",
+      });
+    });
 };

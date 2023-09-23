@@ -11,7 +11,6 @@ const BookCard = ({data}) => {
   const stock = data.stock;
   const handleCart = async () => {
     let book = [];
-    console.log(state);
     for(const item of state){
       if(item.name == name){
         book = item;

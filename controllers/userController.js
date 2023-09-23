@@ -58,6 +58,26 @@ exports.login = async (req, res) => {
   }
 };
 
+// loginGoogle
+exports.loginGoogle = async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.body.email });
+    if (!user) {
+      const newuser = new User(req.body);
+      await newuser.save();
+    }
+    const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, {
+      expiresIn: "1d",
+    });
+    res.send({ message: "Login successful", success: true, data: token });
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .send({ message: "Error logging in", success: false, error });
+  }
+};
+
 //get-user-info-by-id
 exports.info = async (req, res) => {
   try {

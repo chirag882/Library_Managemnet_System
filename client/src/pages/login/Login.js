@@ -1,10 +1,11 @@
 import React from "react";
-import { Button, Form, Input } from "antd"
+import { Button, Form, Input } from "antd";
 import { Link, useNavigate } from "react-router-dom";
+import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
+import jwt_decode from "jwt-decode";
 import axios from "axios";
 
 function Login() {
-
   const navigate = useNavigate();
   const onFinish = async (values) => {
     try {
@@ -19,6 +20,19 @@ function Login() {
       alert(error.message);
     }
   };
+  const onFinishFromGoogle = async (values) => {
+    try {
+      const response = await axios.post("http://localhost:5000/loginGoogle",values);
+      if (response.data.success) {
+        localStorage.setItem("token", response.data.data);
+        navigate("/");
+      } else {
+        alert("Something went wrong");
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  }
 
   return (
     <div className="authentication">
@@ -42,6 +56,17 @@ function Login() {
             Register
           </Link>
         </Form>
+        <GoogleOAuthProvider clientId="55784024139-stkb13pdu59e3lqc33128udvpfdub8u8.apps.googleusercontent.com">
+          <GoogleLogin
+            onSuccess={(credentialResponse) => {
+              var decoded = jwt_decode(credentialResponse.credential);
+              onFinishFromGoogle(decoded.email);
+            }}
+            onError={() => {
+              console.log("Login Failed");
+            }}
+          />
+        </GoogleOAuthProvider>
       </div>
     </div>
   );
