@@ -2,15 +2,21 @@ import React, { useState, useEffect } from "react";
 import ContentWrapper from "../contentWrapper/ContentWrapper";
 import { VscChromeClose } from "react-icons/vsc";
 import { useNavigate, useLocation } from "react-router-dom";
+import {ShoppingCartOutlined} from '@ant-design/icons';
+import { useCart, useDispatchCart } from "../../components/ContextReducer";
 import logo from "../../assets/logo.png";
+import { Badge } from 'antd';
 import "./style.scss";
+import Modal from "../../Modal";
+import Cart from "../../pages/cart/Cart";
 const Header = () => {
+  const data = useCart();
+  const [cartView,setCartView] = useState(false);
   const [show, setShow] = useState("top");
   const [lastScrollY, setLastScrollY] = useState(0);
   const [query, setQuery] = useState("");
   const [showSearch, setShowSearch] = useState("");
   const navigate = useNavigate();
-
   const controlNavbar = () => {
     if (window.scrollY > 200) {
       if (window.scrollY > lastScrollY) {
@@ -60,9 +66,11 @@ const Header = () => {
           <li className="menuItem" onClick={handleLogout}>
             Log Out
           </li>
-          <li className="menuItem" onClick={() => navigate("/")}>
-            Cart
+          <li className="menuItem" onClick={() => {setCartView(true)}}>
+            <ShoppingCartOutlined style={{ fontSize: '150%'}} />
+            <Badge size="small" count={data.length} style={{ fontSize: '85%'}} offset={[-21, -20]} />
           </li>
+          {cartView ? <Modal onClose={() => setCartView(false)}><Cart/></Modal> : null}
         </ul>
       </ContentWrapper>
       {showSearch && (

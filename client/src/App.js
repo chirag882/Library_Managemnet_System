@@ -6,9 +6,10 @@ import Register from "./pages/register/Register";
 import PublicRoute from "./components/PublicRoute";
 import ProtectedRoute from "./components/ProtectedRoute.js";
 import "./App.css";
+import { CartProvider } from "./components/ContextReducer";
 function App() {
   return (
-    <>
+    <CartProvider>
       <BrowserRouter>
         {/* <Main /> */}
         <Routes>
@@ -42,7 +43,7 @@ function App() {
           />
         </Routes>
       </BrowserRouter>
-    </>
+    </CartProvider>
   );
 }
 export default App;

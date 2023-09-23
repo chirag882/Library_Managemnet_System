@@ -1,24 +1,45 @@
 import React from "react";
+import { useDispatchCart,useCart } from "../ContextReducer";
+
 import "./style.scss";
 const BookCard = ({data}) => {
-  // const url = `../../assets/${data.imageLink}`
-  // console.log(url);
-  // const url = "";
-  // console.log(data.imageLink);
+  let dispatch = useDispatchCart();
+  let state = useCart();
   const name = data.title.slice(0, 25);
+  const author = data.author;
+  const id = data._id;
+  const handleCart = async () => {
+    let book = [];
+    console.log(state);
+    for(const item of state){
+      if(item.name == name){
+        book = item;
+        break;
+      }
+    }
+    if(book.length === 0){
+      await dispatch({type:"ADD",id: id, name: name,author: author})
+    } 
+  }
+
+  
+
   return (
     <div className="content">
+
       <div className="posterBlock">
         <div class="container">
           <img className="posterImg" src={require(`../../assets/${data.imageLink}`)} alt="" />
-          <div class="t">
+          <div class="t" onClick={handleCart}>
             <h3>Add to Cart</h3>
+            
           </div>
         </div>
       </div>
       <div className="textBlock">
         <span className="title">{name}</span>
         <span className="date">Year: {data.year}</span>
+        <span className="date">Author: {data.author}</span>
         <br />
         <span className="capacity">Available: {data.stock}/5</span>
       </div>
