@@ -2,15 +2,18 @@ import React, { useEffect, useState } from "react";
 import ContentWrapper from "../../components/contentWrapper/ContentWrapper";
 import BookCard from "../../components/bookCard/BookCard";
 import axios from "axios";
+import Spinner from "../../components/spinner/Spinner"
 import "./style.scss";
 const Home = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
+  const [loading,setLoading] = useState(true);
   const getCardData = async () => {
     axios
       .get(`http://localhost:5000/books?page=${page}`)
       .then((response) => {
         setData((prev) => [...prev, ...response.data]);
+        setLoading(false);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -25,6 +28,7 @@ const Home = () => {
         window.innerHeight + document.documentElement.scrollTop + 1 >=
         document.documentElement.scrollHeight
       ) {
+        setLoading(true);
         setPage((prev) => prev + 1);
       }
     } catch (error) {
@@ -39,6 +43,7 @@ const Home = () => {
 
   return (
     <div className="coverContent">
+    
       <div className="cover-img">
         <div className="opacity-layer"></div>
         <ContentWrapper>
@@ -60,6 +65,7 @@ const Home = () => {
           return (
             <>
               <BookCard key={index} data={item} />
+              {loading && <Spinner/>}
             </>
           );
         })}

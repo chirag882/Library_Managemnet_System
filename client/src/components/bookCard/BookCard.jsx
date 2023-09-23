@@ -18,7 +18,9 @@ const BookCard = ({data}) => {
       </div>
       <div className="textBlock">
         <span className="title">{name}</span>
-        <span className="date">{data.year}</span>
+        <span className="date">Year: {data.year}</span>
+        <br />
+        <span className="capacity">Available: {data.stock}/5</span>
       </div>
     </div>
   );

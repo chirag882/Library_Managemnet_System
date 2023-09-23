@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import ContentWrapper from "../contentWrapper/ContentWrapper";
-import { HiOutlineSearch } from "react-icons/hi";
 import { VscChromeClose } from "react-icons/vsc";
 import { useNavigate, useLocation } from "react-router-dom";
 import logo from "../../assets/logo.png";
@@ -44,6 +43,13 @@ const Header = () => {
   const openSearch = () => {
     setShowSearch(true);
   };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  }
+  
+
   return (
     <header className={`header ${show}`}>
       <ContentWrapper>
@@ -51,14 +57,11 @@ const Header = () => {
           <img src={logo} alt="" />
         </div>
         <ul className="menuItems">
-          <li className="menuItem" onClick={() => navigate("/")}>
-            Log In
+          <li className="menuItem" onClick={handleLogout}>
+            Log Out
           </li>
           <li className="menuItem" onClick={() => navigate("/")}>
             Cart
-          </li>
-          <li className="menuItem">
-            <HiOutlineSearch onClick={openSearch} />
           </li>
         </ul>
       </ContentWrapper>

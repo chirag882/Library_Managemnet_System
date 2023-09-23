@@ -25,6 +25,9 @@ const bookSchema = new mongoose.Schema({
     page: {
         type: Number,
     },
+    stock: {
+        type: Number,
+    },
 });
 
 const bookModel = mongoose.model('books', bookSchema)
